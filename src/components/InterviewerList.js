@@ -2,7 +2,7 @@ import React from "react";
 
 import "components/InterviewerList.scss";
 
-export default function InterviewerListItem(props) {
+export default function InterviewerList(props) {
   return (
     <section class="interviewers">
       <h4 class="interviewers__header text--light">Interviewer</h4>

@@ -8,8 +8,16 @@ import "index.scss";
 import Button from "components/Button";
 import DayListItem from "components/DayListItem";
 import DayList from "components/DayList";
-import InterviewerListItem from "componenents/InterviewerListItem";
+import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
+import Appointment from "components/Appointment/index";
+import Header from "components/Appointment/Header";
+import Empty from "components/Appointment/Empty";
+import Show from "components/Appointment/Show";
+import Confirm from "components/Appointment/Confirm";
+import Status from "components/Appointment/Status";
+import Error from "components/Appointment/Error";
+
 
 storiesOf("Button", module)
   .addParameters({
@@ -128,3 +136,30 @@ storiesOf("InterviewerList", module)
       setInterviewer={action("setInterviewer")}
     />
   ));
+
+
+storiesOf("Appointment", module)
+  .addParameters({
+    backgrounds: [{ name: "white", value: "#fff", default: true }]
+  })
+  .add("Appointment", () => <Appointment />)
+  .add("Appointment with Time", () => <Appointment time="12pm" />);
+
+
+storiesOf("Header", module)
+  .add("Header", () => <Header time="12pm"/>)
+
+storiesOf("Empty", module)
+  .add("Empty", () => <Empty onAdd={action('onAdd works')}/>)
+
+storiesOf("Show", module)
+  .add("Show", () => <Show student="Homer Simpson" interviewer={interviewer} onEdit={() => {alert("Edit clicked")}} onDelete={() => {alert("Delete clicked")}}/>)
+
+storiesOf("Confirm", module)
+  .add("Confirm", () => <Confirm message="Delete the appointment?" onConfirm={() => {alert("Confirm clicked")}} onCancel={() => {alert("Cancel clicked")}}/>)
+
+storiesOf("Status", module)
+  .add("Status", () => <Status message="Deleting" />)
+
+storiesOf("Error", module)
+  .add("Error", () => <Error message="Could not delete appointment" onClose={() => {alert("Close clicked")}} />)
