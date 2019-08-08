@@ -18,6 +18,8 @@ import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
 import Form from "components/Appointment/Form";
+import {appointments} from 'components/Application';
+import Application from 'components/Application';
 
 
 
@@ -121,6 +123,7 @@ const interviewers = [
   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
 ];
 
+
 storiesOf("InterviewerList", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -152,16 +155,24 @@ storiesOf("Appointment", module)
       <Appointment id="last" time="1pm" />
     </Fragment>
   ))
-  .add("Appointment Booked", () => (
+  .add("Appointment Booked", () => {
+
     <Fragment>
-      <Appointment
-        id={1}
-        time="12pm"
-        interview={{ student: "Lydia Miller-Jones", interviewer: {name: "Karl Jensen"} }}
-      />
-      <Appointment id="last" time="1pm" />
+      {appointments.map(appointment => {
+  
+        return (
+          <Appointment 
+            key={appointment.id} 
+            id={appointment.id} 
+            time={appointment.time}
+            interview={appointment.interview}
+          />
+        )
+      })}
+    
     </Fragment>
-  ))
+  })
+  
 
 
 // storiesOf("Header", module)
@@ -185,3 +196,5 @@ storiesOf("Appointment", module)
 storiesOf("Form", module)
   .add("Create mode", () => <Form name="" interviewer="" />)
   .add("Edit mode", () => <Form name="John" interviewer="Jill" />)
+
+

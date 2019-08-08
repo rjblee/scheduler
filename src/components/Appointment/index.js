@@ -2,8 +2,8 @@ import React from "react";
 
 import "components/Appointment/styles.scss";
 import Header from "components/Appointment/Header";
-import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
+import Empty from "components/Appointment/Empty";
 
 /*
 id={1}
