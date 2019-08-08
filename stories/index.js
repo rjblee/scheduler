@@ -156,10 +156,9 @@ storiesOf("Appointment", module)
     </Fragment>
   ))
   .add("Appointment Booked", () => {
-
+    return (
     <Fragment>
       {appointments.map(appointment => {
-  
         return (
           <Appointment 
             key={appointment.id} 
@@ -169,8 +168,9 @@ storiesOf("Appointment", module)
           />
         )
       })}
-    
+    <Appointment time="5pm" />
     </Fragment>
+    )
   })
   
 
