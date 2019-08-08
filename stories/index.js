@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -17,6 +17,8 @@ import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
+import Form from "components/Appointment/Form";
+
 
 
 storiesOf("Button", module)
@@ -143,23 +145,43 @@ storiesOf("Appointment", module)
     backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
   .add("Appointment", () => <Appointment />)
-  .add("Appointment with Time", () => <Appointment time="12pm" />);
+  .add("Appointment with Time", () => <Appointment time="12pm" />)
+  .add("Appointment Empty", () => (
+    <Fragment>
+      <Appointment id={1} time="12pm" />
+      <Appointment id="last" time="1pm" />
+    </Fragment>
+  ))
+  .add("Appointment Booked", () => (
+    <Fragment>
+      <Appointment
+        id={1}
+        time="12pm"
+        interview={{ student: "Lydia Miller-Jones", interviewer: {name: "Karl Jensen"} }}
+      />
+      <Appointment id="last" time="1pm" />
+    </Fragment>
+  ))
 
 
-storiesOf("Header", module)
+// storiesOf("Header", module)
   .add("Header", () => <Header time="12pm"/>)
 
-storiesOf("Empty", module)
+// storiesOf("Empty", module)
   .add("Empty", () => <Empty onAdd={action('onAdd works')}/>)
 
-storiesOf("Show", module)
+// storiesOf("Show", module)
   .add("Show", () => <Show student="Homer Simpson" interviewer={interviewer} onEdit={() => {alert("Edit clicked")}} onDelete={() => {alert("Delete clicked")}}/>)
 
-storiesOf("Confirm", module)
+// storiesOf("Confirm", module)
   .add("Confirm", () => <Confirm message="Delete the appointment?" onConfirm={() => {alert("Confirm clicked")}} onCancel={() => {alert("Cancel clicked")}}/>)
 
-storiesOf("Status", module)
+// storiesOf("Status", module)
   .add("Status", () => <Status message="Deleting" />)
 
-storiesOf("Error", module)
+// storiesOf("Error", module)
   .add("Error", () => <Error message="Could not delete appointment" onClose={() => {alert("Close clicked")}} />)
+
+storiesOf("Form", module)
+  .add("Create mode", () => <Form name="" interviewer="" />)
+  .add("Edit mode", () => <Form name="John" interviewer="Jill" />)

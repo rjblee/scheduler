@@ -6,7 +6,7 @@ export default function Header(props) {
 
   return (
     <header class="appointment__time" time={props.time}>
-      <h4 class="text--semi-bold">12pm</h4>
+      <h4 class="text--semi-bold">{props.time}</h4>
       <hr class="appointment__separator" />
     </header>
   )

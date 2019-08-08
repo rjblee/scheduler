@@ -2,6 +2,11 @@ import React from "react";
 
 import "components/Appointment/styles.scss";
 
+/* props
+student: string
+interviewer: object with some name property
+*/
+
 export default function Show(props) {
 
   return (
