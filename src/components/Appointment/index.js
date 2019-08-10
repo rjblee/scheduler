@@ -14,7 +14,7 @@ and ineterivewer
 
 
 export default function Appointment(props) {
-
+  console.log('Appointment props:', props);
   return (
     <article className="appointment">
       <Header time={props.time} />
