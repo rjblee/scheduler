@@ -11,7 +11,7 @@ export default function Status(props) {
         src="images/status.png"
         alt="Loading"
       />
-      <h1 class="text--semi-bold">Deleting</h1>
+      <h1 class="text--semi-bold">{props.message}</h1>
     </main>
   )
 }

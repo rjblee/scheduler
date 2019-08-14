@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay} from "helpers/selectors";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
@@ -10,10 +10,13 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    appointments: {}
+    appointments: {},
+    interviewers: []
   });
   
   const setDay = day => setState(currentState => ({...currentState, day}));
+
+  console.log(state);
 
   useEffect(() => {
 
@@ -23,14 +26,45 @@ export default function Application(props) {
       axios.get("/api/interviewers")
     ])
     .then((response) => {
-      console.log('got all responses');
       setState(/*(currentState)=>(*/{...state, days: response[0].data, appointments: response[1].data, interviewers: response[2].data})//)
       // currentAppointments = getAppointmentsForDay(state, state.day);
       // setDays(response.data);
     });
 
   }, [])
+
+  function bookInterview(id, interview) {
+    // let appointments = {...state.appointments, [id]: {...state.appointments[id], interview: interview}}
+    
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({...state, appointments: appointments})
+  }
+
+  function deleteInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({...state, appointments: appointments})
+  }
+
   let currentAppointments =  getAppointmentsForDay(state, state.day);
+  let currentInterviewers = getInterviewersForDay(state, state.day);
 
   return (
     <main className="layout">
@@ -63,6 +97,9 @@ export default function Application(props) {
             id={appointment.id}
             time={appointment.time}
             interview={interview}
+            interviewers={currentInterviewers}
+            bookInterview={bookInterview}
+            deleteInterview={deleteInterview}
           />
         )
       })}
