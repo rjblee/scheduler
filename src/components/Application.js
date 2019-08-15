@@ -1,69 +1,21 @@
-import React, {useState, useEffect} from "react";
-import { getAppointmentsForDay, getInterview, getInterviewersForDay} from "helpers/selectors";
+import React, { useState, useEffect } from "react";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
-import axios from "axios";
+import { useApplicationData } from "hooks/useApplicationData";
+
 
 export default function Application(props) {
 
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewers: []
-  });
-  
-  const setDay = day => setState(currentState => ({...currentState, day}));
+  const {
+    state,
+    setDay,
+    bookInterview,
+    deleteInterview
+  } = useApplicationData();
 
-  console.log(state);
-
-  useEffect(() => {
-
-    Promise.all([
-      axios.get("/api/days"),
-      axios.get("/api/appointments"),
-      axios.get("/api/interviewers")
-    ])
-    .then((response) => {
-      setState(/*(currentState)=>(*/{...state, days: response[0].data, appointments: response[1].data, interviewers: response[2].data})//)
-      // currentAppointments = getAppointmentsForDay(state, state.day);
-      // setDays(response.data);
-    });
-
-  }, [])
-
-  function bookInterview(id, interview) {
-    // let appointments = {...state.appointments, [id]: {...state.appointments[id], interview: interview}}
-    
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    setState({...state, appointments: appointments})
-  }
-
-  function deleteInterview(id, interview) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    setState({...state, appointments: appointments})
-  }
-
-  let currentAppointments =  getAppointmentsForDay(state, state.day);
+  let currentAppointments = getAppointmentsForDay(state, state.day);
   let currentInterviewers = getInterviewersForDay(state, state.day);
 
   return (
@@ -91,76 +43,20 @@ export default function Application(props) {
       <section className="schedule">
         {currentAppointments.map(appointment => {
           const interview = appointment.interview && getInterview(state, appointment.interview);
-        return (
-          <Appointment 
-            key={appointment.id}
-            id={appointment.id}
-            time={appointment.time}
-            interview={interview}
-            interviewers={currentInterviewers}
-            bookInterview={bookInterview}
-            deleteInterview={deleteInterview}
-          />
-        )
-      })}
-      <Appointment time="5pm" />
+          return (
+            <Appointment
+              key={appointment.id}
+              id={appointment.id}
+              time={appointment.time}
+              interview={interview}
+              interviewers={currentInterviewers}
+              bookInterview={bookInterview}
+              deleteInterview={deleteInterview}
+            />
+          )
+        })}
+        <Appointment time="5pm" />
       </section>
     </main>
   );
 }
-
-
-// export const appointments = [
-//   {
-//     id: 1,
-//     time: "12pm"
-//   },
-//   {
-//     id: 2,
-//     time: "1pm",
-//     interview: {
-//       student: "Lydia Miller-Jones",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 3,
-//     time: "2pm",
-//     interview: {
-//       student: "Ralph Lee",
-//       interviewer: {
-//         id: 2,
-//         name: "Tori Malcolm",
-//         avatar: "https://i.imgur.com/Nmx0Qxo.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 4,
-//     time: "3pm",
-//     interview: {
-//       student: "Scott Appleton",
-//       interviewer: {
-//         id: 3,
-//         name: "Mildred Nazir",
-//         avatar: "https://i.imgur.com/T2WwVfS.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 5,
-//     time: "4pm",
-//     interview: {
-//       student: "Brian Chang",
-//       interviewer: {
-//         id: 4,
-//         name: "Cohana Roy",
-//         avatar: "https://i.imgur.com/FK8V841.jpg",
-//       }
-//     }
-//   }
-// ];

@@ -7,6 +7,7 @@ import Empty from "components/Appointment/Empty";
 import Form from "components/Appointment/Form";
 import Status from "components/Appointment/Status";
 import Confirm from "components/Appointment/Confirm";
+import Error from "components/Appointment/Error";
 import {useVisualMode} from "hooks/useVisualMode";
 import axios from "axios";
 
@@ -20,8 +21,10 @@ export default function Appointment(props) {
   const CONFIRM = "CONFIRM";
   const DELETING = "DELETING";
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
-  const {mode, transition} = useVisualMode(props.interview ? SHOW : EMPTY)
+  const {mode, transition, back} = useVisualMode(props.interview ? SHOW : EMPTY)
 
   const save = function(name, interviewer) {
     const interview = {
@@ -32,19 +35,21 @@ export default function Appointment(props) {
     props.bookInterview(props.id, interview)
     axios.put("/api/appointments/" + props.id, {interview: interview})
       .then(() => transition(SHOW))
+      .catch(error => transition(ERROR_SAVE, true));
   }
 
-  const onDelete = function(){
-    transition(DELETING)
+  const onDelete = function() {
+    transition(DELETING, true)
+    props.deleteInterview(props.id)
     axios.delete("/api/appointments/" + props.id)
       .then(() => transition(EMPTY))
-    props.deleteInterview(props.id)
+      .catch(error => transition(ERROR_DELETE, true));
   }
 
-  const edit = function(){
-    console.log("hello")
+  const edit = function() {
     transition(EDIT)
   }
+
 
   return (
     <article className="appointment">
@@ -91,12 +96,26 @@ export default function Appointment(props) {
 
         {mode === EDIT && (
           <Form
-            // onEdit={edit}
-            interviewers={props.interviewers} 
-            onCancel={() => {transition(EMPTY)}}
+            onCancel={() => {transition(SHOW)}}
             onSave={save}
+            interviewers={props.interviewers} 
             student={props.interview.student}
-            interviewer={props.interview.interviewer}
+            interviewer={props.interview.interviewer.id}
+          />
+        )}
+
+        {mode === ERROR_SAVE && (
+          <Error
+            message="Could not save"
+            onClose={() => {transition(CREATE)}}
+          />
+        )}  
+        
+        {mode === ERROR_DELETE && (
+          <Error
+            message="Could not delete"
+            onClose={() => {transition(SHOW, true)}}
+            // onClose={() => back()}
           />
         )}
 
