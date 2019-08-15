@@ -1,5 +1,5 @@
 export function getAppointmentsForDay(state, day) {
-console.log('getAppointsForDay called:', arguments);
+
   let result = [];
   let appointmentArray = '';
   for (let targetday of state.days) {

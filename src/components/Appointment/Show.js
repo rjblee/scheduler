@@ -1,15 +1,8 @@
 import React from "react";
-
 import "components/Appointment/styles.scss";
 
-/* props
-student: string
-interviewer: object with some name property
-*/
-
 export default function Show(props) {
-  // const [onEdit, setName] = useState(props.name || "");
-  console.log(props);
+
   return (
     <main class="appointment__card appointment__card--show">
       <section class="appointment__card-left">

@@ -1,5 +1,4 @@
 import React from "react";
-
 import "components/Appointment/styles.scss";
 import Header from "components/Appointment/Header";
 import Show from "components/Appointment/Show";
@@ -10,8 +9,6 @@ import Confirm from "components/Appointment/Confirm";
 import Error from "components/Appointment/Error";
 import {useVisualMode} from "hooks/useVisualMode";
 import axios from "axios";
-
-
 
 export default function Appointment(props) {
   const EMPTY = "EMPTY";
@@ -50,75 +47,72 @@ export default function Appointment(props) {
     transition(EDIT)
   }
 
-
   return (
     <article className="appointment">
       <Header time={props.time} />
 
-        {mode === EMPTY && <Empty onAdd = {() => {transition(CREATE)}}/>}
+      {mode === EMPTY && <Empty onAdd = {() => {transition(CREATE)}}/>}
 
-        {mode === SHOW && (
-          <Show
-            student={props.interview.student}
-            interviewer={props.interview.interviewer}
-            onDelete={() => {transition(CONFIRM)}}
-            onEdit={edit}
-          />
-        )}
-        
-        {mode === CREATE && (
-          <Form 
-            interviewers={props.interviewers} 
-            onCancel={() => {transition(EMPTY)}}
-            onSave={save}
-          >
-          </Form>
-        )}
+      {mode === SHOW && (
+        <Show
+          student={props.interview.student}
+          interviewer={props.interview.interviewer}
+          onDelete={() => {transition(CONFIRM)}}
+          onEdit={edit}
+        />
+      )}
+      
+      {mode === CREATE && (
+        <Form 
+          interviewers={props.interviewers} 
+          onCancel={() => {transition(EMPTY)}}
+          onSave={save}
+        >
+        </Form>
+      )}
 
-        {mode === SAVING && (
-          <Status
-            message="Saving"
-          />
-        )}
+      {mode === SAVING && (
+        <Status
+          message="Saving"
+        />
+      )}
 
-        {mode === CONFIRM && (
-          <Confirm
-            onCancel={() => {transition(SHOW)}}
-            onConfirm={onDelete}
-          />
-        )}
+      {mode === CONFIRM && (
+        <Confirm
+          onCancel={() => {transition(SHOW)}}
+          onConfirm={onDelete}
+        />
+      )}
 
-        {mode === DELETING && (
-          <Status
-            message="Deleting"
-          />
-        )}
+      {mode === DELETING && (
+        <Status
+          message="Deleting"
+        />
+      )}
 
-        {mode === EDIT && (
-          <Form
-            onCancel={() => {transition(SHOW)}}
-            onSave={save}
-            interviewers={props.interviewers} 
-            student={props.interview.student}
-            interviewer={props.interview.interviewer.id}
-          />
-        )}
+      {mode === EDIT && (
+        <Form
+          onCancel={() => {transition(SHOW)}}
+          onSave={save}
+          interviewers={props.interviewers} 
+          student={props.interview.student}
+          interviewer={props.interview.interviewer.id}
+        />
+      )}
 
-        {mode === ERROR_SAVE && (
-          <Error
-            message="Could not save"
-            onClose={() => {transition(CREATE)}}
-          />
-        )}  
-        
-        {mode === ERROR_DELETE && (
-          <Error
-            message="Could not delete"
-            onClose={() => {transition(SHOW, true)}}
-            // onClose={() => back()}
-          />
-        )}
-
+      {mode === ERROR_SAVE && (
+        <Error
+          message="Could not save"
+          onClose={() => {transition(CREATE)}}
+        />
+      )}  
+      
+      {mode === ERROR_DELETE && (
+        <Error
+          message="Could not delete"
+          onClose={() => {transition(SHOW, true)}}
+        />
+      )}
     </article>
   )
 }

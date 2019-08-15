@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
@@ -20,8 +19,6 @@ import Error from "components/Appointment/Error";
 import Form from "components/Appointment/Form";
 import {appointments} from 'components/Application';
 import Application from 'components/Application';
-
-
 
 storiesOf("Button", module)
   .addParameters({
@@ -172,25 +169,11 @@ storiesOf("Appointment", module)
     </Fragment>
     )
   })
-  
-
-
-// storiesOf("Header", module)
   .add("Header", () => <Header time="12pm"/>)
-
-// storiesOf("Empty", module)
   .add("Empty", () => <Empty onAdd={action('onAdd works')}/>)
-
-// storiesOf("Show", module)
   .add("Show", () => <Show student="Homer Simpson" interviewer={interviewer} onEdit={() => {alert("Edit clicked")}} onDelete={() => {alert("Delete clicked")}}/>)
-
-// storiesOf("Confirm", module)
   .add("Confirm", () => <Confirm message="Delete the appointment?" onConfirm={() => {alert("Confirm clicked")}} onCancel={() => {alert("Cancel clicked")}}/>)
-
-// storiesOf("Status", module)
   .add("Status", () => <Status message="Deleting" />)
-
-// storiesOf("Error", module)
   .add("Error", () => <Error message="Could not delete appointment" onClose={() => {alert("Close clicked")}} />)
 
 storiesOf("Form", module)
