@@ -25,3 +25,9 @@ npm run storybook
 ## Screenshots
 
 !["Empty Mode"](https://github.com/rjblee/scheduler/blob/master/docs/1.%20Empty%20Mode.png?raw=true)
+
+!["Create Mode"](https://github.com/rjblee/scheduler/blob/master/docs/2.%20Create%20Mode.png?raw=true)
+
+!["Show Mode"](https://github.com/rjblee/scheduler/blob/master/docs/3.%20Show%20Mode.png?raw=true)
+
+!["Delete Mode"](https://github.com/rjblee/scheduler/blob/master/docs/4.%20Delete%20Mode.png?raw=true)
