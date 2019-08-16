@@ -21,3 +21,7 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Screenshots
+
+!["Empty Mode"](https://github.com/rjblee/scheduler/blob/master/docs/1.%20Empty%20Mode.png?raw=true)
