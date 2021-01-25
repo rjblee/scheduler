@@ -1,5 +1,9 @@
 # Interview Scheduler
 
+## Description
+
+An interview scheduler that allows the user to book an interview session by selecting the date, time, and interviewer. 
+
 ## Setup
 
 Install dependencies with `npm install`.
